@@ -7,6 +7,7 @@
             <x-input-error :messages="$errors->get('message')" class="mt-2" />
             <x-primary-button class="mt-4">{{ __('Chirp') }}</x-primary-button>
         </form>
+
         <div class="mt-6 bg-white shadow-sm rounded-lg divide-y">
             @foreach ($chirps as $chirp)
                 <div class="p-6 flex space-x-2">
@@ -40,6 +41,14 @@
                                         <x-dropdown-link :href="route('chirps.edit', $chirp)">
                                             {{ __('Edit') }}
                                         </x-dropdown-link>
+                                        <form method="POST" action="{{ route('chirps.destroy', $chirp) }}">
+                                            @csrf
+                                            @method('delete')
+                                            <x-dropdown-link :href="route('chirps.destroy', $chirp)"
+                                                onclick="event.preventDefault(); this.closest('form').submit();">
+                                                {{ __('Delete') }}
+                                            </x-dropdown-link>
+                                        </form>
                                     </x-slot>
                                 </x-dropdown>
                             @endif
@@ -49,4 +58,5 @@
                 </div>
             @endforeach
         </div>
+    </div>
 </x-app-layout>
